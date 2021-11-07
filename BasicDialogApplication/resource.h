@@ -9,6 +9,7 @@
 #define IDR_MAINFRAME                   128
 #define IDC_STATIC_MESSAGE              1000
 #define IDC_BUTTON_GREETING             1001
+#define IDC_BUTTON_ALLOCATE             1001
 
 // Next default values for new objects
 // 

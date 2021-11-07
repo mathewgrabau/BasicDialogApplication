@@ -45,6 +45,16 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
+// SampleObject 
+SampleObject::SampleObject(CString objectData)
+{
+	m_objectData = objectData;
+}
+
+void SampleObject::GetData(CString& dataOut)
+{
+	dataOut = m_objectData;
+}
 
 // CBasicDialogApplicationDlg dialog
 
@@ -52,7 +62,7 @@ END_MESSAGE_MAP()
 
 CBasicDialogApplicationDlg::CBasicDialogApplicationDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_BASICDIALOGAPPLICATION_DIALOG, pParent)
-	, m_messageString(_T(""))
+	, m_messageString(_T("")), m_bAllocated(FALSE)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -67,7 +77,7 @@ BEGIN_MESSAGE_MAP(CBasicDialogApplicationDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_BN_CLICKED(IDC_BUTTON_GREETING, &CBasicDialogApplicationDlg::OnBnClickedButtonGreeting)
+	ON_BN_CLICKED(IDC_BUTTON_ALLOCATE, &CBasicDialogApplicationDlg::OnBnClickedButtonAllocate)
 END_MESSAGE_MAP()
 
 
@@ -156,11 +166,19 @@ HCURSOR CBasicDialogApplicationDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-
-
-void CBasicDialogApplicationDlg::OnBnClickedButtonGreeting()
+void CBasicDialogApplicationDlg::OnBnClickedButtonAllocate()
 {
-	// Update the message displayed value
-	m_messageString = _T("Hello!");
-	this->UpdateData(FALSE);
+	if (m_bAllocated == FALSE)
+	{
+		// Create the object
+		m_bAllocated = TRUE;
+
+		m_sampleObject = new SampleObject(_T("My obj data"));
+		ASSERT(m_sampleObject != NULL);
+		if (m_sampleObject != NULL)
+		{
+			m_sampleObject->GetData(m_messageString);
+			UpdateData(FALSE);
+		}
+	}
 }

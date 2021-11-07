@@ -5,6 +5,16 @@
 #pragma once
 
 
+class SampleObject : public CObject
+{
+public:
+	SampleObject(CString objectData);
+	void GetData(CString& dataOut);
+
+private:
+	CString m_objectData;
+};
+
 // CBasicDialogApplicationDlg dialog
 class CBasicDialogApplicationDlg : public CDialogEx
 {
@@ -31,9 +41,11 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
-public:
-	afx_msg void OnBnClickedButtonGreeting();
 private:
 	// Value displayed in the message/caption
 	CString m_messageString;
+	BOOL m_bAllocated;
+	SampleObject *m_sampleObject;
+public:
+	afx_msg void OnBnClickedButtonAllocate();
 };
